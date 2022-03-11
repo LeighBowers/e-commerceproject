@@ -2,47 +2,53 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const db = require("./app/models");
-const productsRouter = require("./app/routes/product.routes");
-const Role = db.role;
-db.mongoose
-    .connect(process.env.MONGO_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-    .then(() => {
-        console.log("Successfully connect to MongoDB.");
-        initial();
-    })
-    .catch(err => {
-        console.error("Connection error", err);
-        process.exit();
-    });
+// const db = require("./app/models");
+const mongoose = require("mongoose")
+// const productsRouter = require("./app/routes/product.routes");
 
-function initial() {
-    Role.estimatedDocumentCount((err, count) => {
-        if (!err && count === 0) {
-            new Role({
-                name: "user"
-            }).save(err => {
-                if (err) {
-                    console.log("error", err);
-                }
-                console.log("added 'user' to roles collection");
-            });
+mongoose.connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+});
+const db = mongoose.connection;
+db.on("error", (error) => console.error(error));
+db.once("open", () => console.log("Connected to Database"));
 
-            new Role({
-                name: "admin"
-            }).save(err => {
-                if (err) {
-                    console.log("error", err);
-                }
-                console.log("added 'admin' to roles collection");
-            });
-        }
-    });
-}
+
+//     .then(() => {
+//     console.log("Successfully connect to MongoDB.");
+//     initial();
+// })
+//     .catch(err => {
+//         console.error("Connection error", err);
+//         process.exit();
+//     });
+
+// function initial() {
+//     Role.estimatedDocumentCount((err, count) => {
+//         if (!err && count === 0) {
+//             new Role({
+//                 name: "user"
+//             }).save(err => {
+//                 if (err) {
+//                     console.log("error", err);
+//                 }
+//                 console.log("added 'user' to roles collection");
+//             });
+
+//             new Role({
+//                 name: "admin"
+//             }).save(err => {
+//                 if (err) {
+//                     console.log("error", err);
+//                 }
+//                 console.log("added 'admin' to roles collection");
+//             });
+//         }
+//     });
+// }
 // set port, listen for requests
+
+
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to Leigh-Anne Bower's Backend." });
 });

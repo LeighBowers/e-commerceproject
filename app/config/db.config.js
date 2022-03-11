@@ -1,5 +1,5 @@
 module.exports = {
-    HOST: "localhost",
+    HOST: "Leigh",
     PORT: 27017,
-    DB: "bezkoder_db"
+    DB: "rest-api"
 };
