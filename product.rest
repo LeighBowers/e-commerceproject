@@ -1,0 +1,21 @@
+GET http://localhost:6000/products
+
+###
+
+POST http://localhost:6000/products
+Content-Type: application/json
+Authorization: Snow eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjMxYjE3NWUzOGY3ZmNiZTYzYmEyYWQiLCJjYXJ0IjpbXSwiaWF0IjoxNjQ3NDI1OTkyLCJleHAiOjE2NDc1MTIzOTJ9.WA9D8XWvMpgZBL455NXKoT68cdgA6lc7V2XNtSZL8RA
+
+{
+"name": "CHANEL EGOISTE PLATINUM 100ML EDT",
+"price": "2040.00",
+"description":"Egoiste Platinum by Chanel is a Woody Floral Musk fragrance for men. Egoiste Platinum was launched in 1993. The nose behind this fragrance is Jacques Polge. Top notes are rosemary, lavender, neroli and petitgrain; middle notes are galbanum, and clary sage.",
+"img":"https://i.postimg.cc/T1hxhJKz/WYj-EDN2-Rqi-Kvl-Ouej-DOE-15-400x400.jpg"
+
+
+}
+
+###
+DELETE http://localhost:6000/products/621dd4ea556eab845cd04009
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFkY2Q1NDhmNDU2N2IzZjhjNjJmZDYiLCJjYXJ0IjpbXSwiaWF0IjoxNjQ2MTI0ODk5LCJleHAiOjE2NDYyMTEyOTl9.92LjwOy0i2NhHNfK-BI91ni5CIVktXm2xQhfaf-P0Dg

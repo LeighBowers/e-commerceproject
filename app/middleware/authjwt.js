@@ -6,12 +6,12 @@ verifyToken = (req, res, next) => {
   if (!token) {
     return res.status(403).send({ message: "No token provided!" });
   }
-  jwt.verify(token, process.env.USERNAME, (err, decoded) => {
+  jwt.verify(token, process.env.ACCESSTOKEN, (err, decoded) => {
     if (err) {
       return res.status(401).send({ message: "Unauthorized!" });
     }
     req.userId = decoded._id;
-    req.cart = decoded.cart;
+    // req.cart = decoded.cart;
     next();
   });
 };
