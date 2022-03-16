@@ -1,82 +1,150 @@
 const express = require("express");
-const { authJwt } = require("../middlewares");
-const controller = require("../controllers/user.controller");
 const router = express.Router();
-const app = express();
+const User = require("../models/user");
 const bcrypt = require("bcryptjs");
-const User = require("../models/user.model");
+const jwt = require("jsonwebtoken");
+const verifyToken = require("../middleware/authjwt");
+const product = require("../models/product");
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
-app.get("/api/test/all", controller.allAccess);
-app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
-
-app.get(
-    "/api/test/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
+router.post(
+  "/signup",
+  [checktheDuplicateName, checktheDuplicateEmail],
+  async (req, res) => {
+    try {
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+      const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: hashedPassword,
+      });
+      const newUser = await user.save();
+      res.status(201).json(newUser);
+      console.log(salt);
+      console.log(hashedPassword);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  }
 );
-
-
-
-// router.get("/user", (req, res) => {
-//     User.find({}, (err, users) => {
-//         if (err) {
-//             res.send({ message: "Something went wrong." });
-//             next();
-//         }
-//         req.json(users);
-
-//     });
-
-
-router.get('/', async (req, res) => {
-
-    const users = await User.find({});
-
-    const userMap = {};
-    users.forEach((user) => {
-        userMap[user._id] = user;
+router.post("/signin", async (req, res) => {
+  try {
+    User.findOne({ name: req.body.name }, (err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      if (!user) {
+        return res.status(404).send({ message: "User Not found." });
+      }
+      var passwordIsValid = bcrypt.compareSync(
+        req.body.password,
+        user.password
+      );
+      if (!passwordIsValid) {
+        return res.status(401).send({
+          accessToken: null,
+          message: "Invalid Password!",
+        });
+      }
+      let token = jwt.sign({ _id: user._id, cart: user.cart }, process.env.ACCESSTOKEN, {
+        expiresIn: 86400, // 24 hours
+      });
+      res.status(200).send({
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        accessToken: token,
+      });
     });
-
-    res.send(userMap);
-
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 });
-// router.get('/:id', getUser, (req, res) => {
-//     res.json(res.user)
-// })
+router.patch("/:id", [getUser, verifyToken], async (req, res) => {
+  if (req.params.id != req.userId) {
+    return res.status(401).send({ message: "Unauthorized!" });
+  }
+  if (req.body.name != null) {
+    res.user.name = req.body.name;
+  }
+  if (req.body.email != null) {
+    res.user.email = req.body.email;
+  }
+  if (req.body.password != null) {
+    res.user.password = req.body.password;
+  }
+  if (req.body.phone_number != null) {
+    res.user.phone_number = req.body.phone_number;
+  }
+  if (req.body.cart != null) {
+    res.user.cart = req.body.cart;
+  }
+  try {
+    const updatedUser = await res.user.save();
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
-
-// signup route
-router.post("/signup", async (req, res) => {
-    const body = req.body;
-
-    if (!(body.email && body.password)) {
-        return res.status(400).send({ error: "Data not formatted properly" });
+router.delete("/:id", [getUser, verifyToken], async (req, res) => {
+  try {
+    if (req.params.id != req.userId) {
+      return res.status(401).send({ message: "Unauthorized!" });
     }
-
-    // creating a new mongoose doc from user data
-    const user = new User(body);
-    // generate salt to hash password
-    const salt = await bcrypt.genSalt(10);
-    // now we set user password to hashed password
-    user.password = await bcrypt.hash(user.password, salt);
-    user.save().then((doc) => res.status(201).send(doc));
+    await res.user.remove();
+    res.json({ message: "Deleted User" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
-// login route
-router.post("/login", async (req, res) => {
-    const body = req.body;
-    const user = await User.findOne({ email: body.email });
+async function getUser(req, res, next) {
+  let user;
+  try {
+    user = await User.findById(req.params.id);
+    if (user == null) {
+      return res.status(404).json({ message: "Cannot find User" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+
+  res.user = user;
+  next();
+}
+async function checktheDuplicateName(req, res, next) {
+  let user;
+  try {
+    user = await User.findOne({ name: req.body.name });
     if (user) {
-        // check user password with hashed password stored in the database
-        const validPassword = await bcrypt.compare(body.password, user.password);
-        if (validPassword) {
-            res.status(200).json({ message: "Valid password" });
-        } else {
-            res.status(400).json({ error: "Invalid Password" });
-        }
-    } else {
-        res.status(401).json({ error: "User does not exist" });
+      return res.status(404).send({ message: "User already exist." });
     }
-});
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+  next();
+}
 
-module.exports = (router)
+async function checktheDuplicateEmail(req, res, next) {
+  let email;
+  try {
+    email = await User.findOne({ email: req.body.email });
+    if (email) {
+      return res.status(404).send({ message: "Email already exist." });
+    }
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+  next();
+}
+module.exports = router;
