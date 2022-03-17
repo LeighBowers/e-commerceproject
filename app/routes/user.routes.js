@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 
 router.post(
   "/signup",
-  [checktheDuplicateName, checktheDuplicateEmail],
+  // [checktheDuplicateName, checktheDuplicateEmail],
   async (req, res) => {
     try {
       const salt = await bcrypt.genSalt();
