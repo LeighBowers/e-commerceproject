@@ -11,6 +11,8 @@ const usersRouter = require("./app/routes/user.routes");
 const cartRouter = require("./app/routes/cart.routes");
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
+app.set('port', process.env.PORT || 4000);
+
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to Database"));
 app.get('/', (req, res) => {
@@ -21,4 +23,5 @@ app.use(cors())
 app.use("/products", productsRouter);
 app.use("/users", usersRouter);
 app.use("/cart", cartRouter);
-app.listen(process.env.PORT || 2000, () => console.log(" Server started "));
+
+app.listen(app.get("port"), () => console.log(" Server started "));
