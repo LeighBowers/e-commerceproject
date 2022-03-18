@@ -1,8 +1,8 @@
-GET http://localhost:6000/products
+GET https://ecommerce-pr.herokuapp.com/products
 
 ###
 
-POST http://localhost:6000/products
+POST http://localhost:4000/products
 Content-Type: application/json
 Authorization: Snow eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjMxYjE3NWUzOGY3ZmNiZTYzYmEyYWQiLCJjYXJ0IjpbXSwiaWF0IjoxNjQ3NDI1OTkyLCJleHAiOjE2NDc1MTIzOTJ9.WA9D8XWvMpgZBL455NXKoT68cdgA6lc7V2XNtSZL8RA
 
@@ -16,6 +16,6 @@ Authorization: Snow eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjMxYjE3NWU
 }
 
 ###
-DELETE http://localhost:6000/products/621dd4ea556eab845cd04009
+DELETE http://localhost:4000/products/6231cebcf91900513d06d642
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFkY2Q1NDhmNDU2N2IzZjhjNjJmZDYiLCJjYXJ0IjpbXSwiaWF0IjoxNjQ2MTI0ODk5LCJleHAiOjE2NDYyMTEyOTl9.92LjwOy0i2NhHNfK-BI91ni5CIVktXm2xQhfaf-P0Dg
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFkY2Q1NDhmNDU2N2IzZjhjNjJmZDYiLCJjYXJ0IjpbXSwiaWF0IjoxNjQ2MTI0ODk5LCJleHAiOjE2NDYyMTEyOTl9.92LjwOy0i2NhHNfK-BI91ni5CIVktXm2xQhfaf-P0Dg

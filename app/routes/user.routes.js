@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 
 router.post(
   "/signup",
-  // [checktheDuplicateName, checktheDuplicateEmail],
+  [checktheDuplicateEmail],
   async (req, res) => {
     try {
       const salt = await bcrypt.genSalt();
@@ -37,7 +37,7 @@ router.post(
 );
 router.post("/signin", async (req, res) => {
   try {
-    User.findOne({ name: req.body.name }, (err, user) => {
+    User.findOne({ email: req.body.email }, (err, user) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
