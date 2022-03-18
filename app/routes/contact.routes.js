@@ -2,8 +2,8 @@ const express = require('express');
 const app = express.Router();
 const nodemailer = require('nodemailer');
 require("dotenv").config();
-// const User = require("../models/user.model");
-// const user =require("./user.Routes")
+const User = require("../models/user");
+const user =require("./user.Routes")
 
 
 app.get('/', (req, res) => {
@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 
 
 app.post('/', (req, res) => {
-    let { text, email, tel, textarea } = req.body;
+    let { name, email, phone, subject } = req.body;
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
