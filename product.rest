@@ -2,7 +2,7 @@ GET https://ecommerce-pr.herokuapp.com/products
 
 ###
 
-POST http://localhost:4000/products
+POST https://ecommerce-pr.herokuapp.com/users
 Content-Type: application/json
 Authorization: Snow eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjMxYjE3NWUzOGY3ZmNiZTYzYmEyYWQiLCJjYXJ0IjpbXSwiaWF0IjoxNjQ3NDI1OTkyLCJleHAiOjE2NDc1MTIzOTJ9.WA9D8XWvMpgZBL455NXKoT68cdgA6lc7V2XNtSZL8RA
 
