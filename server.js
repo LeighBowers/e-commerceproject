@@ -26,5 +26,6 @@ app.get('/', (req, res) => {
 app.use("/products", productsRouter);
 app.use("/users", usersRouter);
 app.use("/cart", cartRouter);
+app.use("/contact", cartRouter);
 
 app.listen(app.get("port"), () => console.log(" Server started "));
