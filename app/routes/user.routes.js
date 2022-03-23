@@ -35,7 +35,7 @@ router.post(
     }
   }
 );
-router.post("/signin", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     User.findOne({ email: req.body.email }, async (err, user) => {
       if (err) {
@@ -43,6 +43,7 @@ router.post("/signin", async (req, res) => {
         return;
       }
       if (!user) {
+        console.log(user)
         return res.status(404).send({ message: "User Not found." });
       }
       var passwordIsValid = await bcrypt.compare(
