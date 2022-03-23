@@ -1,13 +1,9 @@
 // const express = require('express');
-// const app = express.Router();
+require("dotenv").config()
 const nodemailer = require('nodemailer');
-// require("dotenv").config();
 const User = require("../models/user");
 // const user = require("./user.Routes")
 const express = require("express")
-
-// const nodemailer = require('nodemailer');
-require("dotenv").config()
 const app = express.Router()
 
 app.post('/', (req, res) => {
