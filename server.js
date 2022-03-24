@@ -11,7 +11,7 @@ const contactRouter = require("./app/routes/contact.routes");
 // ("./routes/products.routes");
 // ("./routes/users.routes");
 const app = express();
-app.set('port', process.env.PORT || 4000);
+app.set('port', process.env.PORT || 3000);
 app.use(express.json());
 app.use(cors())
 

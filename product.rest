@@ -2,20 +2,28 @@ GET https://ecommerce-pr.herokuapp.com/products
 
 ###
 
-POST https://ecommerce-pr.herokuapp.com/users
+POST https://ecommerce-pr.herokuapp.com/products
 Content-Type: application/json
 Authorization: Snow eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjMxYjE3NWUzOGY3ZmNiZTYzYmEyYWQiLCJjYXJ0IjpbXSwiaWF0IjoxNjQ3NDI1OTkyLCJleHAiOjE2NDc1MTIzOTJ9.WA9D8XWvMpgZBL455NXKoT68cdgA6lc7V2XNtSZL8RA
 
 {
-"name": "CHANEL EGOISTE PLATINUM 100ML EDT",
-"price": "2040.00",
-"description":"Egoiste Platinum by Chanel is a Woody Floral Musk fragrance for men. Egoiste Platinum was launched in 1993. The nose behind this fragrance is Jacques Polge. Top notes are rosemary, lavender, neroli and petitgrain; middle notes are galbanum, and clary sage.",
-"img":"https://i.postimg.cc/T1hxhJKz/WYj-EDN2-Rqi-Kvl-Ouej-DOE-15-400x400.jpg"
+"name": "Boity Pink Sapphire Eau De Parfum",
+"price": "671.00",
+"description":"A poetic, modern fragrance created to express the perfect harmony of sensuality and strength. The Pink Sapphire fragrance from Boity captures the essence of powerful elegance and what it means to be a fearless woman.",
+"img":"https://i.postimg.cc/jdp1snjT/01-50ml-1.jpg"
 
 
 }
 
 ###
-DELETE http://localhost:4000/products/6231cebcf91900513d06d642
+DELETE https://ecommerce-pr.herokuapp.com/products/6231cebcf91900513d06d642
 Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFkY2Q1NDhmNDU2N2IzZjhjNjJmZDYiLCJjYXJ0IjpbXSwiaWF0IjoxNjQ2MTI0ODk5LCJleHAiOjE2NDYyMTEyOTl9.92LjwOy0i2NhHNfK-BI91ni5CIVktXm2xQhfaf-P0Dg
+
+
+###
+PATCH  https://ecommerce-pr.herokuapp.com/products/6231cebcf91900513d06d642
+Content-Type: application/json
+{
+    "name":"Versace Dylan Blue Mini"
+}
