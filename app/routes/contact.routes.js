@@ -4,10 +4,10 @@ const nodemailer = require('nodemailer');
 const User = require("../models/user");
 // const user = require("./user.Routes")
 const express = require("express")
-const router = express.Router()
+const app = express.Router()
 
-router.post('/', (req, res) => {
-    let { name, email, phone, subject } = req.body
+app.post('/', (req, res) => {
+    let { name, email, phone, subject, message } = req.body
 
 
     const transporter = nodemailer.createTransport({
@@ -42,4 +42,8 @@ router.post('/', (req, res) => {
     });
 
 })
-module.exports = router
+module.exports = app
+
+
+
+
