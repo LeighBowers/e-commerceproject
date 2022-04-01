@@ -1,7 +1,16 @@
-POST  https://ecommerce-pr.herokuapp.com/contact
+POST  https://ecommerce-pr.herokuapp.com/users/contact
     Content-Type: application/json
 
     {
+        "name":"yaaseen",
+        "email":"yaaseendav@gmal.com",
+        "phone":"something",
+        "subject":"something"
+    }
+    ###
+
+POST https://localhost:3000/contact
+     {
         "name":"yaaseen",
         "email":"yaaseendav@gmal.com",
         "phone":"something",
